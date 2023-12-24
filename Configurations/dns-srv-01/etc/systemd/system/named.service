@@ -1,0 +1,24 @@
+[Unit]
+Description=Berkeley Internet Name Domain (DNS)
+Wants=nss-lookup.target
+Wants=named-setup-rndc.service
+Before=nss-lookup.target
+After=named-setup-rndc.service
+After=network.target
+
+[Service]
+Type=forking
+Environment=NAMEDCONF=/etc/named/named.conf
+PIDFile=/run/named/named.pid
+
+ExecStartPre=/usr/bin/named-checkconf -z "$NAMEDCONF"
+ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF}
+ExecReload=/bin/sh -c 'if /usr/sbin/rndc -c /etc/named/rndc.conf null > /dev/null 2>&1; then /usr/sbin/rndc -c /etc/named/rndc.conf reload; else /bin/kill -HUP $MAINPID; fi'
+
+ExecStop=/bin/sh -c '/usr/sbin/rndc -c /etc/named/rndc.conf stop > /dev/null 2>&1 || /bin/kill -TERM $MAINPID'
+
+PrivateTmp=true
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
