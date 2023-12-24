@@ -1,0 +1,20 @@
+; base zone file for foo.bar
+$TTL 6h                               ; default TTL for zone
+$ORIGIN b.foo.bar.                    ; base domain-name
+;
+; Start of Authority RR defining the key characteristics of the zone (domain)
+@       IN      SOA     dns-srv-01.foo.bar.     hostmaster.foo.bar. (
+                                2     ; serial number
+                                2h    ; refresh time
+                                15m   ; update retry
+                                2w    ; expire
+                                1h    ; minimum TTL
+                                )
+;
+; name server RRs for the domain
+@                       IN      NS      dns-srv-01.foo.bar.
+@                       IN      NS      dns-srv-02.foo.bar.
+;
+; A RRs
+dns-client-02           IN      A       172.16.11.10
+dns-resolver-01         IN      A       172.16.11.221
