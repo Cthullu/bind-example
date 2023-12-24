@@ -71,3 +71,25 @@ setup:
 
 Putting everything together, the scenario looks something like this:
 ![Scenario Sketch](scenario_sketch.png)
+
+## Configuration
+
+Before I jump into the configuration (and this is were I will also point to some
+of the challenges I faced):
+
+* I used Ubuntu 22.04
+* I used the Bind9 version provided by the system package manager (`9.18.20`)
+* I discovered quiete early, that I like to have my configuration files for all
+  of my servers organized in a specific way which differs from the system
+  default
+  * All configuration files life inside `/etc/named/` or a subfolder
+  * All zone files life inside `/etc/named/zones`
+  * I use the main `named.conf` file only to include other configuration
+    snippets
+  * Transfered zones, logs etc. life at `/var/named` or a subfolder
+* I always configured rndc to manage my server
+  * Configuration file lifes at `/etc/named/`
+  * Configuration files for rndc are not included in this repository
+* I adapted the systemd service file
+  * To not check for configured systemd
+  * To not load any external environment file
