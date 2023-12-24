@@ -1,0 +1,19 @@
+; base zone file for 12.16.172.in-addr.arpa
+$TTL 6h                               ; default TTL for zone
+$ORIGIN 12.16.172.in-addr.arpa.       ; base domain-name
+;
+; Start of Authority RR defining the key characteristics of the zone (domain)
+@       IN      SOA     dns-srv-03.foo.bar.     hostmaster.foo.bar. (
+                                1     ; serial number
+                                2h    ; refresh time
+                                15m   ; update retry
+                                2w    ; expire
+                                1h    ; minimum TTL
+                                )
+;
+; name server RRs for the domain
+@       IN      NS      dns-srv-03.foo.bar.
+;
+; A RRs
+10      IN      PTR     dns-client-01.c.foo.bar.
+221     IN      PTR     dns-resolver-01.c.foo.bar.
