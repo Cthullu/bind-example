@@ -2,6 +2,8 @@
 
 Bind9 Selective Forwarding Resolver Configuration Example.
 
+---
+
 ## Motivation
 
 I recently came up with the idea to increase my knowledge regarding some of the
@@ -24,6 +26,8 @@ One final think I want to address:
 I am not an expert of DNS. Please do not use any of this code in your
 environment if you do not know what you do (this is a general advice, you should
 never use untested or code you do not understand).
+
+---
 
 ## Scenario
 
@@ -48,11 +52,20 @@ The assumed scenario configured is as follows:
   authoritative answers for the zones `foo.bar`, `a.foo.bar` and `b.foo.bar`
 * We have one primary DNS-Server (`dns-srv-03`) which provides authoritative
   answers for the zone `c.foo.bar`
+* We do not have to consider reverse mapping zone delegation
 * We have another recursive server already in place which we can forward any
   other DNS-Queries to
 * Our existing setup is only part of a larger private network we do not know
   much about, so we have to forward queries for reverse mapping entries for
   private networks to the existing forwarder as well
+
+For simplification, I decided to use separate reverse mapping zones for each
+forward mapping zone:
+
+* `172.16.2.0/24` - `foo.bar`
+* `172.16.10.0/24` - `a.foo.bar`
+* `172.16.11.0/24` - `b.foo.bar`
+* `172.16.12.0/24` - `c.foo.bar`
 
 I asigned the following IP addresses to the server/clients included in this
 setup:
@@ -71,6 +84,8 @@ setup:
 
 Putting everything together, the scenario looks something like this:
 ![Scenario Sketch](scenario_sketch.png)
+
+---
 
 ## Configuration
 
@@ -94,3 +109,50 @@ of the challenges I faced):
 * I adapted the systemd service file
   * To not check for configured systemd
   * To not load any external environment file
+
+I configured the server in the following order:
+
+* Primary name server for `foo.bar`, `a.foo.bar` and `b.foo.bar` (`dns-srv-01`)
+* Secondary name server for `foo.bar`, `a.foo.bar` and `b.foo.bar`
+  (`dns-srv-02`)
+* Primary name server for `c.foo.bar` (`dns-srv-03`)
+* Forwarding resolver (`dns-resolver-01`)
+* Clients (`dns-client-[01-03]`)
+
+---
+
+### dns-srv-01
+
+### dns-srv-02
+
+### dns-srv-03
+
+### dns-resolver-02
+
+---
+
+## Conclusion
+
+After I finished troubleshooting, created all of the configuration provided by
+this repository and performed a lot of tests, the last part of learning
+something is always to draw a conclusion.
+
+One thing I did take with me during this learning experience was a lot of
+knowledge about the various roles a (simple) Bind9 server can take. This makes
+it an incredible tool which can be a beast to first understand. However, once
+the conceptional idea is clear, it becomes a lot more natural to configure the
+various parts.
+
+I also learned a lot about (selective) forwarding of queries, recursive and
+iterative queries and once again was reminded, how important a good logging
+configuration is to ease troubleshooting.
+
+The final thing I took with me is, that while the documentation of Bind9 from
+ISC at [readthedocs.io][1] is already great, it does not cover all the
+possibilities which can be performed by using Bind9 (which is most likely due to
+the vast amount of confgiuration scenarios). Thankfully, the internet is full of
+confgiuration references, ideas and configuration snippets which helped me a lot
+during this project. The hardn part is simply to find and put those peaces
+together.
+
+[1]: https://bind9.readthedocs.io/en/latest/
