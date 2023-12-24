@@ -1,6 +1,6 @@
 ; base zone file for foo.bar
-$TTL 6h           ; default TTL for zone
-$ORIGIN foo.bar.  ; base domain-name
+$TTL 6h                               ; default TTL for zone
+$ORIGIN foo.bar.                      ; base domain-name
 ;
 ; Start of Authority RR defining the key characteristics of the zone (domain)
 @       IN      SOA     dns-srv-01.foo.bar. hostmaster.foo.bar. (
