@@ -86,6 +86,7 @@ of the challenges I faced):
   * All zone files life inside `/etc/named/zones`
   * I use the main `named.conf` file only to include other configuration
     snippets
+  * All configuration snippets life inside `/etc/named/conf.d`
   * Transfered zones, logs etc. life at `/var/named` or a subfolder
 * I always configured rndc to manage my server
   * Configuration file lifes at `/etc/named/`
