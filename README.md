@@ -1,4 +1,4 @@
-# bind9-resolver-example
+# bind9-example
 
 Bind9 Selective Forwarding Resolver Configuration Example.
 
