@@ -98,7 +98,7 @@ main challenge I faced):
   of my servers organized in a specific way which differs from the system
   default
   * All configuration files life inside `/etc/named/` or a subfolder
-  * All zone files life inside `/etc/named/zones`
+  * All zone files life inside `/var/named/zones`
   * I use the main `named.conf` file only to include other configuration
     snippets
   * All configuration snippets life inside `/etc/named/conf.d`
