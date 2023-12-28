@@ -15,6 +15,6 @@ $ORIGIN 11.16.172.in-addr.arpa.       ; base domain-name
 @       IN      NS      dns-srv-01.foo.bar.
 @       IN      NS      dns-srv-02.foo.bar.
 ;
-; A RRs
+; PTR RRs
 10      IN      PTR     dns-client-01.b.foo.bar.
 221     IN      PTR     dns-resolver-01.b.foo.bar.
