@@ -8,5 +8,6 @@ $TTL	604800
                     1d  ; Retry
                     4w  ; Expire
                     1w  ; Negative Cache TTL
+                    )
 ;
 @   IN    NS    localhost.
